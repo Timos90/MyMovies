@@ -1,4 +1,4 @@
-from psycopg2 import Error
+from psycopg import Error
 from .validators import validate_int_input
 
 

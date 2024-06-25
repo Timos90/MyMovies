@@ -52,7 +52,7 @@ CREATE DATABASE my_movies;
 \c my_movies;
 
 -- Create the user
-CREATE USER dci_user WITH SUPERUSER WITH PASSWORD 'dci_user';
+CREATE USER dci_user LOGIN SUPERUSER WITH PASSWORD 'dci_user';
 ```
 
 4. Create a `.env` file in the root directory of the project and add your database configuration:
