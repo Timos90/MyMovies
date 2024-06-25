@@ -1,6 +1,7 @@
 from psycopg2 import Error
 from .validators import validate_int_input
 
+
 def get_recommendations(connection):
     try:
         print("\nRecommendation Criteria:")
@@ -21,50 +22,65 @@ def get_recommendations(connection):
 
         params = None
 
-        if choice == '1':
-            query = base_query + """
+        if choice == "1":
+            query = (
+                base_query
+                + """
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 5;
             """
-        elif choice == '2':
+            )
+        elif choice == "2":
             genre = input("Enter the genre: ")
-            query = base_query + """
+            query = (
+                base_query
+                + """
                 WHERE m.genre ILIKE %s
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 5;
             """
-            params = (f'%{genre}%',)
-        elif choice == '3':
+            )
+            params = (f"%{genre}%",)
+        elif choice == "3":
             release_year = validate_int_input("Enter the release year: ")
-            query = base_query + """
+            query = (
+                base_query
+                + """
                 WHERE m.releaseyear = %s
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 5;
             """
+            )
             params = (release_year,)
-        elif choice == '4':
+        elif choice == "4":
             genre = input("Enter the genre: ")
             release_year = validate_int_input("Enter the release year: ")
-            query = base_query + """
+            query = (
+                base_query
+                + """
                 WHERE m.genre ILIKE %s AND m.releaseyear = %s
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 5;
             """
-            params = (f'%{genre}%', release_year)
-        elif choice == '5':
+            )
+            params = (f"%{genre}%", release_year)
+        elif choice == "5":
             director = input("Enter the director's name: ")
-            query = base_query + """
+            query = (
+                base_query
+                + """
                 WHERE m.director ILIKE %s
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 3;
             """
-            params = ('%' + director + '%',)
-        elif choice == '6':
+            )
+            params = ("%" + director + "%",)
+        elif choice == "6":
             actor = input("Enter the actor's name: ")
             query = """
                 SELECT m.title, AVG(m.rating) AS averagerating
@@ -75,16 +91,19 @@ def get_recommendations(connection):
                 ORDER BY averagerating DESC
                 LIMIT 3;
             """
-            params = ('%' + actor + '%',)
-        elif choice == '7':
+            params = ("%" + actor + "%",)
+        elif choice == "7":
             company = input("Enter the production company's name: ")
-            query = base_query + """
+            query = (
+                base_query
+                + """
                 WHERE m.productioncompany ILIKE %s
                 GROUP BY m.movieid, m.title
                 ORDER BY averagerating DESC
                 LIMIT 3;
             """
-            params = ('%' + company + '%',)
+            )
+            params = ("%" + company + "%",)
         else:
             print("\nInvalid choice. Please choose a valid one.")
             get_recommendations(connection)
@@ -97,7 +116,9 @@ def get_recommendations(connection):
                 cursor.execute(query)
             recommendations = cursor.fetchall()
             if not recommendations:
-                print("\nThere are no recommended movies with this input. Try a different one.")
+                print(
+                    "\nThere are no recommended movies with this input. Try a different one."
+                )
                 get_recommendations(connection)
             else:
                 print("\nRecommended movies:")

@@ -3,6 +3,7 @@ from src.user import register_user, login_user
 from src.menu import menu
 import time
 
+
 def main():
     connection = connect_to_db()
     if connection:
@@ -15,13 +16,13 @@ def main():
             print("3. Exit")
             choice = input("\nEnter your choice: ")
 
-            if choice == '1':
+            if choice == "1":
                 register_user(connection)
-            elif choice == '2':
+            elif choice == "2":
                 user_id = login_user(connection)
                 if user_id:
                     menu(connection, user_id)
-            elif choice == '3':
+            elif choice == "3":
                 print("\nExiting...")
                 time.sleep(2)
                 print("Thank you for using The Movie Application!!!")
@@ -31,6 +32,7 @@ def main():
                 print("-" * 20)
 
         connection.close()
+
 
 if __name__ == "__main__":
     main()

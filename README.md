@@ -37,14 +37,7 @@ To start using the Movie Database Application, follow these steps:
    git clone https://github.com/Timos90/MyMovies.git
    cd MyMovies
 
-2. Install required dependencies (if not already installed):
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-    If you already have `psycopg2`, `environs`, and other dependencies installed, you can skip this step.
-
-3. Set up database
+2. Set up database
 
 **NB**: Open a terminal from the `MyMovies` folder in the working directory
 
@@ -59,10 +52,7 @@ CREATE DATABASE my_movies;
 \c my_movies;
 
 -- Create the user
-CREATE USER dci_user WITH PASSWORD 'dci_user';
-
--- Grant privileges to the user
-GRANT ALL PRIVILEGES ON DATABASE my_movies TO dci_user;
+CREATE USER dci_user WITH SUPERUSER WITH PASSWORD 'dci_user';
 ```
 
 4. Create a `.env` file in the root directory of the project and add your database configuration:
